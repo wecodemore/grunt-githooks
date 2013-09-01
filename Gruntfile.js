@@ -62,6 +62,15 @@ module.exports = function(grunt) {
         'pre-commit': 'aTask anotherTask'
       },
 
+      'test.multipleHooks': {
+
+        options: {
+          dest: 'tmp/multipleHooks'
+        },
+        'pre-commit': 'aTask',
+        'commit-msg': 'anotherTask'
+      },
+
       // Appending binding to and existing hook 
       'test.append': {
         options: {

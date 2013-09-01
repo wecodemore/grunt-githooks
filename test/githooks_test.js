@@ -7,16 +7,16 @@ var fs = require('fs'),
 // Load grunt configuration
 require('../Gruntfile.js');
 
-function getHookPath(testID) {
-  return 'tmp/' + testID + '/pre-commit';
+function getHookPath(testID, hookName) {
+  return 'tmp/' + testID + '/' + (hookName || 'pre-commit');
 }
 
 function testHookPermissions(hookPath, test) {
   test.ok(fs.statSync(hookPath).mode.toString(8).match(/755$/), 'Should generate hook file with appropriate permissions (755)');
 }
 
-function testHookContent(hookPath, testID, test) {
-  var expected = grunt.file.read('test/expected/pre-commit.' + testID);
+function testHookContent(hookPath, testID, test, hookName) {
+  var expected = grunt.file.read('test/expected/' + (hookName || 'pre-commit') + '.' + testID);
   var actual = grunt.file.read(hookPath);
   test.equal(actual, expected, 'Should create hook with appropriate content');
 }
@@ -86,6 +86,17 @@ exports.githooks = {
       test.done();
     });
   },
+
+  'test.multipleHooks--commit-msg': function (test) {
+
+    test.expect(2);
+
+    var hookPath = getHookPath('multipleHooks','commit-msg');
+    testHookPermissions(hookPath, test);
+    testHookContent(hookPath,'multipleHooks', test, 'commit-msg');
+
+    test.done();
+  }
 };
 
 for (var target in grunt.config.data.githooks) {
