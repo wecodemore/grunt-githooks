@@ -60,6 +60,13 @@ module.exports = function(grunt) {
           'pre-commit': 'jshint'
         }
       },
+
+      'logs.warnIfNotValidHook': {
+        options: {
+          dest: 'tmp/warnIfNotValidHook',
+          'definitelyNotTheNameOfAGitHook': 'jshint'
+        }
+      }
     },
 
     // Unit tests.

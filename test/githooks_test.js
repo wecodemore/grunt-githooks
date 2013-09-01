@@ -39,21 +39,18 @@ exports.githooks = {
 
       test.notEqual(stdout.indexOf('Bound `jshint` to `pre-commit` Git hook'), -1);
       test.done();
-    });
-
-
+    });  
   },
 
-  /*// Except for these tests related to the tasks log output
-  'logs.warnIfHookNameDoesNotMatchGitHookName': function (test) {
-
+  'logs.warnIfNotValidHook': function (test) {
+    
     test.expect(1);
-    exec('grunt githooks:log.warnIfHookNameDoesNotMatchGitHookName', function (err, stdout, stderr) {
+    exec('grunt githooks:logs.warnIfNotValidHook', function(err, stdout){
 
-      console.log(stdout.toString());
+      test.notEqual(stdout.indexOf('`definitelyNotTheNameOfAGitHook` is not the name of a Git hook.'), -1);
       test.done();
-    });
-  }*/
+    });  
+  }
 };
 
 for (var target in grunt.config.data.githooks) {

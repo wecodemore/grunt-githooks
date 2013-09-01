@@ -28,9 +28,16 @@ module.exports = function(grunt) {
 
       if (key !== 'dest') {
 
+        if (!githooks.isNameOfAGitHook(key)) {
+          grunt.log.errorlns('`' + key + '` is not the name of a Git hook. Script will be created but won\'t be triggered by Git actions.');
+        }
+
         githooks.createHook(options.dest, key, options[key]);
-        grunt.log.ok('Bound `' + options[key] + '` to `' + key + '` Git hook');
+        grunt.log.ok('Bound `' + options[key] + '` to `' + key + '` Git hook.');
       }
     }
   });
 };
+
+// Exports the internals in case people need to override stuff
+module.exports.internals = githooks;
