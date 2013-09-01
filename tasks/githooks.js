@@ -28,7 +28,7 @@ var task = module.exports = function(grunt) {
 
   grunt.registerMultiTask('githooks', 'Binds grunt tasks to git hooks', function() {
     
-    var options = this.options(defaults);
+    var options = this.options(task.defaults);
 
     grunt.file.mkdir(options.dest);
 
