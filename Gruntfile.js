@@ -103,6 +103,18 @@ module.exports = function(grunt) {
         'pre-commit': 'aTask'
       },
 
+      'test.hookSpecificOptions': {
+
+        options: {
+          dest: 'tmp/hookSpecificOptions',
+          hashbang: '#!/usr/bin/node'
+        },
+        'pre-commit': {
+          taskNames: 'aTask',
+          template: 'test/fixtures/custom-template.js.hb'
+        }
+      },
+
       // Test targets for logging validation
       // Logs which tasks get bound to which hook
       'logs.defaultLogging': {
@@ -122,6 +134,15 @@ module.exports = function(grunt) {
 
       // Fail if the existing hook does not have the appropriate scripting
       // language
+      'fails.noTaskNames': {
+        options: {
+          dest: 'tmp/noTaskNames'
+        },
+        'pre-commit': {
+          preventExit: true
+        }
+      },
+
       'fails.invalidScriptingLanguage': {
         options: {
           dest: 'tmp/invalidScriptingLanguage',

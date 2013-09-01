@@ -19,11 +19,6 @@ var defaults = {
   preventExit: false
 };
 
-function isGitHookDefinition(key) {
-  // Consider any key that does not have a default as a GitHookDefinition
-  return key !== 'options';
-}
-
 var task = module.exports = function(grunt) {
 
   // Please see the Grunt documentation for more information regarding task
@@ -37,7 +32,7 @@ var task = module.exports = function(grunt) {
 
     for (var key in this.data) {
 
-      if (isGitHookDefinition(key)) {
+      if (task.isGitHookDefinition(key)) {
 
         task.createHook(key, this.data[key], options, grunt);
       }
@@ -47,8 +42,14 @@ var task = module.exports = function(grunt) {
 
 task.createHook = function (hookName, taskNames, options, grunt) {
 
-  grunt.log.subhead('Binding `' + taskNames + '` to `' + hookName + '` Git hook.');
+  options = task.cloneOptions(options);
+  
+  if(typeof taskNames === 'object') {
+    task.mergeHookSpecificOptions(options, taskNames);
+    taskNames = taskNames.taskNames;
+  }
 
+  grunt.log.subhead('Binding `' + taskNames + '` to `' + hookName + '` Git hook.');
   task.validateHookName(hookName, grunt);
 
   try {
@@ -57,6 +58,31 @@ task.createHook = function (hookName, taskNames, options, grunt) {
   } catch (error) {
     task.logError(error, hookName, grunt);
   }
+};
+
+task.cloneOptions = function (options) {
+
+  var result = {};
+
+  for (var key in options) {
+    result[key] = options[key];
+  }
+
+  return result;
+};
+
+task.mergeHookSpecificOptions = function (options, hookOptions) {
+
+  for (var key in hookOptions) {
+    if (key !== 'taskNames') {
+      options[key] = hookOptions[key];
+    }
+  }
+};
+
+task.isGitHookDefinition = function(key) {
+  // Consider any key that does not have a default as a GitHookDefinition
+  return key !== 'options';
 };
 
 task.validateHookName = function (hookName, grunt) {
