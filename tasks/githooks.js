@@ -15,12 +15,13 @@ var defaults = {
   // Default destination for hooks is in the git directory but can be overriden to output them somewhere else
   dest: '.git/hooks',
   template: path.resolve(__dirname, '../templates/node.js.hb'),
-  hashbang: '#!/usr/bin/env node'
+  hashbang: '#!/usr/bin/env node',
+  preventExit: false
 };
 
 function isGitHookDefinition(key) {
   // Consider any key that does not have a default as a GitHookDefinition
-  return key != 'options';
+  return key !== 'options';
 }
 
 var task = module.exports = function(grunt) {

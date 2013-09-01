@@ -81,6 +81,7 @@ module.exports = function(grunt) {
       'test.insert': {
         options: {
           dest: 'tmp/insert',
+          preventExit: true
         },
         'pre-commit': 'aTask'
       },
