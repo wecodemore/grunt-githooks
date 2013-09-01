@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+// GRUNT-GITHOOK START
 // Custom template (not so custom ;)
 var exec = require('child_process').exec;
 
@@ -15,3 +16,4 @@ exec('grunt aTask', function (err, stdout, stderr) {
 
   process.exit(exitCode);
 });
+// GRUNT-GITHOOK END

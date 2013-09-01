@@ -8,7 +8,7 @@ exec('grunt {{task}}', function (err, stdout, stderr) {
   if (err) {
     console.log(stderr);
     exitCode = -1;
-  }
+  }{{#unless preventExit}}
 
-  process.exit(exitCode);
+  process.exit(exitCode);{{/unless}}
 });

@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+// ... Some code that will be run before the hook
+
 // GRUNT-GITHOOK START
 var exec = require('child_process').exec;
 
@@ -12,7 +14,7 @@ exec('grunt aTask', function (err, stdout, stderr) {
     console.log(stderr);
     exitCode = -1;
   }
-
-  process.exit(exitCode);
 });
 // GRUNT-GITHOOK END
+
+// ... Some code that will be run after the hook... if it does not exit, that is

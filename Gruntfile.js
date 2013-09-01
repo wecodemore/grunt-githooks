@@ -80,6 +80,13 @@ module.exports = function(grunt) {
         }
       },
 
+      'test.insert': {
+        options: {
+          dest: 'tmp/insert',
+          'pre-commit': 'aTask'
+        }
+      },
+
       // Test targets for logging validation
       // Logs which tasks get bound to which hook
       'logs.defaultLogging': {

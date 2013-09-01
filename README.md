@@ -52,6 +52,11 @@ Default value: `'.git/hooks'`
 The directory in which the generated hooks should go. You'll probably never have to use it, but it's
 a useful option for testing
 
+#### template
+Type: `String`
+
+The path to the Handlebar template you want to use to generate the binding script. Default template is:
+
 ### Usage Examples
 
 #### Simple hook

@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+// ... Some code that will be run before the hook
+
+// GRUNT-GITHOOK START // GRUNT-GITHOOK END
+
+// ... Some code that will be run after the hook... if it does not exit, that is
