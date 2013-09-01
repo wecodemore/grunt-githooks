@@ -14,7 +14,8 @@ var githooks = require('../lib/githooks'),
 var defaults = {
   // Default destination for hooks is in the git directory but can be overriden to output them somewhere else
   dest: '.git/hooks',
-  template: path.resolve(__dirname, '../templates/node.js.hb')
+  template: path.resolve(__dirname, '../templates/node.js.hb'),
+  hashbang: '#!/usr/bin/env node'
 };
 
 function isGitHookDefinition(key) {

@@ -87,6 +87,14 @@ module.exports = function(grunt) {
         }
       },
 
+      'test.customHashbang': {
+        options: {
+          dest: 'tmp/customHashbang',
+          'pre-commit': 'aTask',
+          hashbang: '#!/usr/bin/node'
+        }
+      },
+
       // Test targets for logging validation
       // Logs which tasks get bound to which hook
       'logs.defaultLogging': {
@@ -110,6 +118,14 @@ module.exports = function(grunt) {
         options: {
           dest: 'tmp/invalidScriptingLanguage',
           'pre-commit': 'jshint'
+        }
+      },
+
+      'fails.customHashbangInvalidScriptingLanguage': {
+        options: {
+          dest: 'tmp/customHashbangInvalidScriptingLanguage',
+          'pre-commit': 'jshint',
+          hashbang: '#!/usr/bin/node'
         }
       }
     },

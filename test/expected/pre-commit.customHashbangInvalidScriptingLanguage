@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+
+// This hook would be written in node... except the test would like it to be shell

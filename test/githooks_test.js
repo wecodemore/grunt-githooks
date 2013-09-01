@@ -74,7 +74,18 @@ exports.githooks = {
       testHookContent(getHookPath('invalidScriptingLanguage'), 'invalidScriptingLanguage', test);
       test.done();
     });
-  }
+  },
+
+  'fails.customHashbangInvalidScriptingLanguage': function (test) {
+    test.expect(3);
+    exec('grunt githooks:fails.customHashbangInvalidScriptingLanguage', function(err, stdout, stderr){
+
+      test.ok(!!err);
+      test.notEqual(stdout.indexOf("doesn't seem to be written in the same language"), -1);
+      testHookContent(getHookPath('customHashbangInvalidScriptingLanguage'), 'customHashbangInvalidScriptingLanguage', test);
+      test.done();
+    });
+  },
 };
 
 for (var target in grunt.config.data.githooks) {
