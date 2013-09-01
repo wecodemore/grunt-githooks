@@ -33,20 +33,18 @@ grunt.initConfig({
         // Target-specific options go here
       },
       // Hook definitions go there
-      'pre-commit': 'jshint',
-      'post-merge': {
-        'taskNames': 'bower:install'
-      }
     }
-    },
   },
 })
 ```
 
 #### Defining a few hooks
 
-Hooks are listed as keys of your target configuration. *Any other key than `option`* in your target will be considered the name of a hook you want to create. The simplest way to define a hook is to provide a *space-separated list of the tasks* you want the hook to run as the value*. For example:
+Hooks are listed as keys of your target configuration. 
+**Any key other than `option`** is considered the name of a hook you want to create. 
+The simplest way to define a hook is to provide a **space-separated list of the tasks you want the hook to run as the value**. 
 
+For example:
 ```js
 grunt.initConfig({
   githooks: {
@@ -56,12 +54,16 @@ grunt.initConfig({
     }
   }
 });
+```
 
-The plugin warns you if the name matches one of the [hooks announced in the Git documentation](https://www.kernel.org/pub/software/scm/git/docs/githooks.html). It will still create the hook, though, in case Git introduces new hooks in the future.
+The plugin warns you if the name matches one of the [hooks announced in the Git documentation](https://www.kernel.org/pub/software/scm/git/docs/githooks.html).
+It will still create the hook, though, in case Git introduces new hooks in the future.
 
 #### Hook specific options
 
-If you need to override a few options for a given hook only, you can *use and Object instead of a String*. The `taskNames` property will then correspond to the tasks you want to run, and any other key will be merged into the options.
+If you need to override a few options for a given hook only, you can *use and Object instead of a String*. 
+The `taskNames` property will then correspond to the tasks you want to run. 
+Any other key will be merged into the options.
 
 ```js
 grunt.initConfig({
@@ -83,10 +85,12 @@ grunt.initConfig({
     }
   }
 })
+```
 
 #### Working with existing hooks
 
-If you happen to have existing hooks in your hook folder, the plugin will *append the code running Grunt* at the end of your hooks. You can also insert marker comments in your hooks to specify exactly where you want them inserted.
+If you happen to have existing hooks in your hook folder, the plugin *appends the code launching Grunt* at the end of your hooks. 
+You can also insert marker comments in your hooks to specify exactly where you want them inserted.
 Your existing hook would look something like this:
 
 ```js
@@ -97,13 +101,15 @@ Your existing hook would look something like this:
 // Some code run after Grunt starts
 ```
 
-The markers get automatically inserted when the plugin appends code, so the hooks get updated cleanly the next time you run `grunt githooks`.
+The markers get automatically inserted when the plugin appends code, so hooks get updated cleanly the next time you run `grunt githooks`.
 
 #### Customising hook output
 
-By default, the plugin generate NodeJS scripts for the hooks. Reasonning behind this is that creating Shell scripts won't work well for people using Windows and NodeJS is already installed as Grunt kinda need is. However, you're not tied to it and you can customise pretty much everything.
+By default, the plugin generate NodeJS scripts for the hooks. 
+Reasonning behind this is that creating Shell scripts won't work well for people using Windows.
+Plus, NodeJS is already installed as Grunt kinda needs it. 
+However, you're not tied to it and you can customise the generated script entirely. In case of a Shell script:
 
-So say you want a Shell script rather than the default NodeJS ones:
 ```js
 grunt.initConfig({
   githooks: {
@@ -124,7 +130,9 @@ grunt.initConfig({
 
 #### Extending the plugin
 
-Pretty annoying when you're using a library that's missing the exact extension point you need to tweak its functionalities? `grunt-githooks` is based on a lot of small functions and most of them are exposed so you can override them. If you need feel free to tinker with the internals (at your own risk though ;)). Could be something along:
+Pretty annoying when you're using a library that's missing the exact extension point you need to tweak its functionalities? 
+`grunt-githooks` is based on a lot of small functions and most of them are exposed so you can override them. 
+If you need feel, free to tinker with the internals (at your own risk though ;)). Could be something along:
 
 ```js
 var gruntGithooks = require('grunt-githooks/tasks/githooks');
@@ -135,7 +143,6 @@ gruntGithooks.internals.Hook.prototype.getHookContent = function () {
   originalFunction.apply(this, arguments);
 };
 ```
-
 
 ### Options
 
@@ -151,7 +158,8 @@ code in it (to avoid inserting Node code in a Python hook for example).
 Type: `String`
 
 Path to the Handlebars template used to generate the code that will run Grunt
-in the hook. Default template is the `node.js.hb` file located in the `templates` folder of the plugin. It also contains a `shell.hb` file with the template for a shell script hook.
+in the hook. Default template is the `node.js.hb` file located in the `templates` folder of the plugin. 
+It also contains a `shell.hb` file with the template for a shell script hook.
 
 #### startMarker
 Type: `String`
@@ -161,13 +169,16 @@ Default: `'// GRUNT-GITHOOKS START'`
 Type: `String`
 Default: `'// GRUNT-GITHOOKS END'`
 
-`startMarker` and `endMarker` are markers the plugin use to know where to insert code if a hook already exist. If the existing hook doesn't have these markers, the code will simply be appended.
+`startMarker` and `endMarker` are markers the plugin use to know where to insert code if a hook already exist. 
+If the existing hook doesn't have these markers, the code will simply be appended.
 
 #### preventExit
 Type: `Boolean`
 Default `false`
 
-By default, the inserted code will exit the process after Grunt has run, using a -1 exit code if the task(s) failed. If you're inserting the code running Grunt in the middle of an existing hook, you'll probably want to disable this so any code after what was inserted by the plugin runs.
+By default, the inserted code will exit the process after Grunt has run, using a -1 exit code if the task(s) failed. 
+If you're inserting the code running Grunt in the middle of an existing hook,
+you might want to disable this so any code after what was inserted by the plugin runs.
 
 #### dest
 Type: `String`
