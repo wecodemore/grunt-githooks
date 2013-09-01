@@ -7,18 +7,30 @@ var fs = require('fs'),
 // Load grunt configuration
 require('../Gruntfile.js');
 
+function getHookPath(testID) {
+  return 'tmp/' + testID + '/pre-commit';
+}
+
+function testHookPermissions(hookPath, test) {
+  test.ok(fs.statSync(hookPath).mode.toString(8).match(/755$/), 'Should generate hook file with appropriate permissions (755)');
+}
+
+function testHookContent(hookPath, testID, test) {
+  var expected = grunt.file.read('test/expected/pre-commit.' + testID);
+  var actual = grunt.file.read(hookPath);
+  test.equal(actual, expected, 'Should create hook with appropriate content');
+}
+
 function addTest(testSuite, testID) {
 
   testSuite[testID] = function (test) {
 
     test.expect(2);
-    var hookPath = 'tmp/' + testID + '/pre-commit';
+    var hookPath = getHookPath(testID);
 
-    test.ok(fs.statSync(hookPath).mode.toString(8).match(/755$/), 'Should generate hook file with appropriate permissions (755)');
+    testHookPermissions(hookPath, test);
+    testHookContent(hookPath, testID, test);
 
-    var expected = grunt.file.read('test/expected/pre-commit.' + testID);
-    var actual = grunt.file.read(hookPath);
-    test.equal(actual, expected, 'Should create hook with appropriate content');
     test.done();
   };
 }
@@ -50,6 +62,18 @@ exports.githooks = {
       test.notEqual(stdout.indexOf('`definitelyNotTheNameOfAGitHook` is not the name of a Git hook.'), -1);
       test.done();
     });  
+  },
+
+  'fails.invalidScriptingLanguage': function (test) {
+
+    test.expect(3);
+    exec('grunt githooks:fails.invalidScriptingLanguage', function(err, stdout, stderr){
+
+      test.ok(!!err);
+      test.notEqual(stdout.indexOf("doesn't seem to be written in the same language"), -1);
+      testHookContent(getHookPath('invalidScriptingLanguage'), 'invalidScriptingLanguage', test);
+      test.done();
+    });
   }
 };
 

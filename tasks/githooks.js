@@ -32,8 +32,17 @@ module.exports = function(grunt) {
           grunt.log.errorlns('`' + key + '` is not the name of a Git hook. Script will be created but won\'t be triggered by Git actions.');
         }
 
-        githooks.createHook(options.dest, key, options[key]);
-        grunt.log.ok('Bound `' + options[key] + '` to `' + key + '` Git hook.');
+        try {
+          githooks.createHook(options.dest, key, options[key]);
+          grunt.log.ok('Bound `' + options[key] + '` to `' + key + '` Git hook.');
+        } catch (error) {
+
+          var gruntError = error;
+          if(error.message && error.message === 'ERR_INVALID_SCRIPT_LANGUAGE'){
+            gruntError = 'A hook already exist for `' + key + '` but doesn\'t seem to be written in the same language as the binding script.';
+          }
+          grunt.fail.warn(gruntError);
+        }
       }
     }
   });

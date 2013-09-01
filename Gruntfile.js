@@ -29,6 +29,14 @@ module.exports = function(grunt) {
       tests: ['tmp'],
     },
 
+    copy: {
+      tests: {
+        files: [
+          {cwd: 'test/fixtures', src: '**', dest: 'tmp', expand: true}
+        ]
+      }
+    },
+
     // Configuration to be run (and then tested).
     githooks: {
 
@@ -40,12 +48,15 @@ module.exports = function(grunt) {
       },
 
       // Test targets
+      // Default hook creation
       'test.default': {
         options: {
           dest: 'tmp/default',
           'pre-commit': 'aTask'
         }
       },
+
+      // Binding multiple tasks
       'test.multiple_tasks': {
         options: {
           dest: 'tmp/multiple_tasks',
@@ -53,7 +64,16 @@ module.exports = function(grunt) {
         }
       },
 
+      // Appending binding to and existing hook 
+      'test.append': {
+        options: {
+          dest: 'tmp/append',
+          'pre-commit': 'aTask'
+        }
+      },
+
       // Test targets for logging validation
+      // Logs which tasks get bound to which hook
       'logs.defaultLogging': {
         options: {
           dest: 'tmp/defaultLogging',
@@ -61,10 +81,20 @@ module.exports = function(grunt) {
         }
       },
 
+      // Logs if the hook name does not correspond to a Git hook
       'logs.warnIfNotValidHook': {
         options: {
           dest: 'tmp/warnIfNotValidHook',
           'definitelyNotTheNameOfAGitHook': 'jshint'
+        }
+      },
+
+      // Fail if the existing hook does not have the appropriate scripting
+      // language
+      'fails.invalidScriptingLanguage': {
+        options: {
+          dest: 'tmp/invalidScriptingLanguage',
+          'pre-commit': 'jshint'
         }
       }
     },
@@ -82,11 +112,28 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-  // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'githooks', 'nodeunit']);
+  // plugin's test task(s), then test the result.
+  grunt.registerTask('test', (function () {
+    
+    var tasks = [
+      'clean', 
+      'copy'
+    ];
+
+    for (var target in grunt.config.data.githooks) {
+      if(/^test\./.test(target)){
+        tasks.push('githooks:'+target);
+      }
+    }
+  
+    tasks.push('nodeunit');
+
+    return tasks;
+  }()));
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
