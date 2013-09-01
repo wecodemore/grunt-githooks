@@ -28,7 +28,8 @@ module.exports = function(grunt) {
 
       if (key !== 'dest') {
 
-        githooks.createHook(options.dest, key, options[key]);  
+        githooks.createHook(options.dest, key, options[key]);
+        grunt.log.ok('Bound `' + options[key] + '` to `' + key + '` Git hook');
       }
     }
   });

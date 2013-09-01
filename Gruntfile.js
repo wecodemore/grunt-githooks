@@ -51,7 +51,15 @@ module.exports = function(grunt) {
           dest: 'tmp/multiple_tasks',
           'pre-commit': 'aTask anotherTask'
         }
-      }
+      },
+
+      // Test targets for logging validation
+      'logs.defaultLogging': {
+        options: {
+          dest: 'tmp/defaultLogging',
+          'pre-commit': 'jshint'
+        }
+      },
     },
 
     // Unit tests.
