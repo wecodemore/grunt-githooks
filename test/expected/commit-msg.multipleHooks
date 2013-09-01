@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// GRUNT-GITHOOK START
+// GRUNT-GITHOOKS START
 var exec = require('child_process').exec;
 
 exec('grunt anotherTask', function (err, stdout, stderr) {
@@ -15,4 +15,4 @@ exec('grunt anotherTask', function (err, stdout, stderr) {
 
   process.exit(exitCode);
 });
-// GRUNT-GITHOOK END
+// GRUNT-GITHOOKS END

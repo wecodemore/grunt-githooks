@@ -115,6 +115,18 @@ module.exports = function(grunt) {
         }
       },
 
+      'test.shellScript': {
+
+        options: {
+          dest: 'tmp/shellScript',
+          hashbang: '#!/bin/sh',
+          template: 'templates/shell.hb',
+          startMarker: '## GRUNT-GITHOOKS START',
+          endMarker: '## GRUNT-GITHOOKS END'
+        },
+        'pre-commit':'jshint'
+      },
+
       // Test targets for logging validation
       // Logs which tasks get bound to which hook
       'logs.defaultLogging': {

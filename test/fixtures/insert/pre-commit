@@ -2,6 +2,6 @@
 
 // ... Some code that will be run before the hook
 
-// GRUNT-GITHOOK START // GRUNT-GITHOOK END
+// GRUNT-GITHOOKS START // GRUNT-GITHOOKS END
 
 // ... Some code that will be run after the hook... if it does not exit, that is

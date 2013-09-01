@@ -16,7 +16,9 @@ var defaults = {
   dest: '.git/hooks',
   template: path.resolve(__dirname, '../templates/node.js.hb'),
   hashbang: '#!/usr/bin/env node',
-  preventExit: false
+  preventExit: false,
+  startMarker: '// GRUNT-GITHOOKS START',
+  endMarker: '// GRUNT-GITHOOKS END'
 };
 
 var task = module.exports = function(grunt) {
@@ -40,6 +42,7 @@ var task = module.exports = function(grunt) {
   });
 };
 
+// Expose the internals of the task so people can override them... at their own risk :D
 task.createHook = function (hookName, taskNames, options, grunt) {
 
   options = task.cloneOptions(options);
@@ -53,7 +56,9 @@ task.createHook = function (hookName, taskNames, options, grunt) {
   task.validateHookName(hookName, grunt);
 
   try {
-    task.internals.createHook(hookName, taskNames, options);
+
+    var hook = new task.internals.Hook(hookName, taskNames, options);
+    hook.create();
     grunt.log.ok();
   } catch (error) {
     task.logError(error, hookName, grunt);
@@ -87,7 +92,7 @@ task.isGitHookDefinition = function(key) {
 
 task.validateHookName = function (hookName, grunt) {
 
-  if (!task.internals.isNameOfAGitHook(hookName)) {
+  if (!task.internals.Hook.isNameOfAGitHook(hookName)) {
     grunt.log.errorlns('`' + hookName + '` is not the name of a Git hook. Script will be created but won\'t be triggered by Git actions.');
   }
 };

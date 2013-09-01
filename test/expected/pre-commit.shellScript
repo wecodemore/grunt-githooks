@@ -1,0 +1,5 @@
+#!/bin/sh
+
+## GRUNT-GITHOOKS START
+grunt jshint
+## GRUNT-GITHOOKS END
