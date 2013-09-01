@@ -72,6 +72,14 @@ module.exports = function(grunt) {
         }
       },
 
+      'test.customTemplate': {
+        options: {
+          dest: 'tmp/customTemplate',
+          'pre-commit': 'aTask',
+          template: 'test/fixtures/custom-template.js.hb'
+        }
+      },
+
       // Test targets for logging validation
       // Logs which tasks get bound to which hook
       'logs.defaultLogging': {
