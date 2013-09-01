@@ -42,9 +42,7 @@ module.exports = function(grunt) {
 
       // Actual target used to bind hooks for project development
       'dev': {
-        options: {
-          'pre-commit': 'jshint'
-        }
+        'pre-commit': 'jshint'
       },
 
       // Test targets
@@ -52,47 +50,47 @@ module.exports = function(grunt) {
       'test.default': {
         options: {
           dest: 'tmp/default',
-          'pre-commit': 'aTask'
-        }
+        },
+        'pre-commit': 'aTask'
       },
 
       // Binding multiple tasks
       'test.multiple_tasks': {
         options: {
           dest: 'tmp/multiple_tasks',
-          'pre-commit': 'aTask anotherTask'
-        }
+        },
+        'pre-commit': 'aTask anotherTask'
       },
 
       // Appending binding to and existing hook 
       'test.append': {
         options: {
-          dest: 'tmp/append',
-          'pre-commit': 'aTask'
-        }
+          dest: 'tmp/append'
+        },
+        'pre-commit': 'aTask'
       },
 
       'test.customTemplate': {
         options: {
           dest: 'tmp/customTemplate',
-          'pre-commit': 'aTask',
           template: 'test/fixtures/custom-template.js.hb'
-        }
+        },
+        'pre-commit': 'aTask'
       },
 
       'test.insert': {
         options: {
           dest: 'tmp/insert',
-          'pre-commit': 'aTask'
-        }
+        },
+        'pre-commit': 'aTask'
       },
 
       'test.customHashbang': {
         options: {
           dest: 'tmp/customHashbang',
-          'pre-commit': 'aTask',
           hashbang: '#!/usr/bin/node'
-        }
+        },
+        'pre-commit': 'aTask'
       },
 
       // Test targets for logging validation
@@ -100,16 +98,16 @@ module.exports = function(grunt) {
       'logs.defaultLogging': {
         options: {
           dest: 'tmp/defaultLogging',
-          'pre-commit': 'jshint'
-        }
+        },
+        'pre-commit': 'aTask'
       },
 
       // Logs if the hook name does not correspond to a Git hook
       'logs.warnIfNotValidHook': {
         options: {
           dest: 'tmp/warnIfNotValidHook',
-          'definitelyNotTheNameOfAGitHook': 'jshint'
-        }
+        },
+        'definitelyNotTheNameOfAGitHook': 'jshint'
       },
 
       // Fail if the existing hook does not have the appropriate scripting
@@ -117,16 +115,16 @@ module.exports = function(grunt) {
       'fails.invalidScriptingLanguage': {
         options: {
           dest: 'tmp/invalidScriptingLanguage',
-          'pre-commit': 'jshint'
-        }
+        },
+        'pre-commit': 'jshint'
       },
 
       'fails.customHashbangInvalidScriptingLanguage': {
         options: {
           dest: 'tmp/customHashbangInvalidScriptingLanguage',
-          'pre-commit': 'jshint',
           hashbang: '#!/usr/bin/node'
-        }
+        },
+        'pre-commit': 'jshint'
       }
     },
 

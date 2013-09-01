@@ -49,7 +49,7 @@ exports.githooks = {
     test.expect(1);
     exec('grunt githooks:logs.defaultLogging', function(err, stdout) {
 
-      test.notEqual(stdout.indexOf('Binding `jshint` to `pre-commit` Git hook'), -1);
+      test.notEqual(stdout.indexOf('Binding `aTask` to `pre-commit` Git hook'), -1);
       test.done();
     });  
   },

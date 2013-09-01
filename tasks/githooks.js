@@ -20,7 +20,7 @@ var defaults = {
 
 function isGitHookDefinition(key) {
   // Consider any key that does not have a default as a GitHookDefinition
-  return (typeof defaults[key]) === 'undefined';
+  return key != 'options';
 }
 
 var task = module.exports = function(grunt) {
@@ -34,24 +34,24 @@ var task = module.exports = function(grunt) {
 
     grunt.file.mkdir(options.dest);
 
-    for (var key in options) {
+    for (var key in this.data) {
 
       if (isGitHookDefinition(key)) {
 
-        task.createHook(key, options, grunt);
+        task.createHook(key, this.data[key], options, grunt);
       }
     }
   });
 };
 
-task.createHook = function (hookName, options, grunt) {
+task.createHook = function (hookName, taskNames, options, grunt) {
 
-  grunt.log.subhead('Binding `' + options[hookName] + '` to `' + hookName + '` Git hook.');
+  grunt.log.subhead('Binding `' + taskNames + '` to `' + hookName + '` Git hook.');
 
   task.validateHookName(hookName, grunt);
 
   try {
-    task.internals.createHook(hookName, options[hookName], options);
+    task.internals.createHook(hookName, taskNames, options);
     grunt.log.ok();
   } catch (error) {
     task.logError(error, hookName, grunt);
