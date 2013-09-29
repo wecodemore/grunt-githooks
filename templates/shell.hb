@@ -1,1 +1,1 @@
-grunt {{task}} {{args}}
+grunt {{task}}{{#if args}} {{args}}{{/if}}
