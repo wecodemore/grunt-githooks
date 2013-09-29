@@ -103,6 +103,14 @@ module.exports = function(grunt) {
         'pre-commit': 'aTask'
       },
 
+      'test.withArguments': {
+        options: {
+          dest: 'tmp/withArguments',
+					args: "--test myargument"
+        },
+        'pre-commit': 'aTask'
+      },
+
       'test.hookSpecificOptions': {
 
         options: {
