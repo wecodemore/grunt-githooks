@@ -1,6 +1,6 @@
 var exec = require('child_process').exec;
 
-exec('grunt {{task}}', function (err, stdout, stderr) {
+exec('grunt {{task}} {{args}}', function (err, stdout, stderr) {
   
   console.log(stdout);
 

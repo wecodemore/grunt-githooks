@@ -1,1 +1,1 @@
-grunt {{task}}
+grunt {{task}} {{args}}
