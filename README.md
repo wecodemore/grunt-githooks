@@ -200,5 +200,6 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 
 ## Release History
-
+ 
+ - 2013-10-05   v0.2.0   New *args* option to specify arguments to hooked task. Bugfix to allow running grunt when the Gruntfile is not at the root of the project.
  - 2013-09-02   v0.1.0   Initial functionnalities
