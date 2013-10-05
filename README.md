@@ -128,6 +128,13 @@ grunt.initConfig({
 });
 ```
 
+In the template, you've got access to the following variables:
+
+ - *task*: String with the name of the tasks to be run
+ - *args*: String with the list of arguments to provide to the task
+ - *gruntfileDirectory*: Absolute path to the directory containing the Gruntfile
+ - *preventExit*: Flag telling if the hook should avoid exiting after the grunt task
+
 #### Extending the plugin
 
 Pretty annoying when you're using a library that's missing the exact extension point you need to tweak its functionalities? 
