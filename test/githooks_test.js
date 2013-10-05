@@ -7,6 +7,10 @@ var fs = require('fs'),
 // Load grunt configuration
 require('../Gruntfile.js');
 
+// Cache path to the directory hosting the Gruntfile
+// As tests are run via Grunt, this will be the current working directory
+var gruntfileDirectory = process.cwd();
+
 function getHookPath(testID, hookName) {
   return 'tmp/' + testID + '/' + (hookName || 'pre-commit');
 }
@@ -17,6 +21,7 @@ function testHookPermissions(hookPath, test) {
 
 function testHookContent(hookPath, testID, test, hookName) {
   var expected = grunt.file.read('test/expected/' + (hookName || 'pre-commit') + '.' + testID);
+  expected = expected.replace('{{expectedWorkingDir}}', gruntfileDirectory);
   var actual = grunt.file.read(hookPath);
   test.equal(actual, expected, 'Should create hook with appropriate content');
 }

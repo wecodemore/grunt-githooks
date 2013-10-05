@@ -1,2 +1,1 @@
-cd {{gruntfileDirectory}}
-grunt {{task}}{{#if args}} {{args}}{{/if}}
+(cd {{gruntfileDirectory}} && grunt {{task}}{{#if args}} {{args}}{{/if}})
