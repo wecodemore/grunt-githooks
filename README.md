@@ -2,6 +2,11 @@
 
 > A Grunt plugin to help bind Grunt tasks to Git hooks
 
+Work is in progress to support these two use cases:
+
+ - on Windows, registering hooks able to run Grunt from a different folder than the root of the Git repo – [issue #7](https://github.com/rhumaric/grunt-githooks/issues/7)
+ - when working with Git GUI, makins sure hooks have the appropriate path to Grunt – [issue #8](https://github.com/rhumaric/grunt-githooks/issues/8)
+
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
 
