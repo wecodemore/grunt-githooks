@@ -1,7 +1,7 @@
 var exec = require('child_process').exec;
 
 exec('grunt {{task}}{{#if args}} {{args}}{{/if}}', {
-       cwd: '{{gruntfileDirectory}}'
+       cwd: '{{escapeBackslashes gruntfileDirectory}}'
      }, function (err, stdout, stderr) {
   
   console.log(stdout);
