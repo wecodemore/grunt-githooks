@@ -15,10 +15,6 @@ function getHookPath(testID, hookName) {
   return 'tmp/' + testID + '/' + (hookName || 'pre-commit');
 }
 
-function testHookPermissions(hookPath, test) {
-  test.ok(fs.statSync(hookPath).mode.toString(8).match(/755$/), 'Should generate hook file with appropriate permissions (755)');
-}
-
 function testHookContent(hookPath, testID, test, hookName) {
   var expected = grunt.file.read('test/expected/' + (hookName || 'pre-commit') + '.' + testID);
   expected = expected.replace('{{expectedWorkingDir}}', gruntfileDirectory.replace('\\','\\\\')); // Paths should have backslashes escaped
@@ -30,10 +26,9 @@ function addTest(testSuite, testID) {
 
   testSuite[testID] = function (test) {
 
-    test.expect(2);
+    test.expect(1);
     var hookPath = getHookPath(testID);
 
-    testHookPermissions(hookPath, test);
     testHookContent(hookPath, testID, test);
 
     test.done();
@@ -104,10 +99,9 @@ exports.githooks = {
 
   'test.multipleHooks--commit-msg': function (test) {
 
-    test.expect(2);
+    test.expect(1);
 
     var hookPath = getHookPath('multipleHooks','commit-msg');
-    testHookPermissions(hookPath, test);
     testHookContent(hookPath,'multipleHooks', test, 'commit-msg');
 
     test.done();
