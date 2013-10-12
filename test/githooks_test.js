@@ -21,7 +21,7 @@ function testHookPermissions(hookPath, test) {
 
 function testHookContent(hookPath, testID, test, hookName) {
   var expected = grunt.file.read('test/expected/' + (hookName || 'pre-commit') + '.' + testID);
-  expected = expected.replace('{{expectedWorkingDir}}', gruntfileDirectory);
+  expected = expected.replace('{{expectedWorkingDir}}', gruntfileDirectory.replace('\\','\\\\')); // Paths should have backslashes escaped
   var actual = grunt.file.read(hookPath);
   test.equal(actual, expected, 'Should create hook with appropriate content');
 }
