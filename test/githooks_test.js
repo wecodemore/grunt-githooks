@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require('fs'),
+    path = require('path'),
     exec = require('child_process').exec,
     grunt = require('grunt');
 
@@ -15,11 +16,23 @@ function getHookPath(testID, hookName) {
   return 'tmp/' + testID + '/' + (hookName || 'pre-commit');
 }
 
+// Paths will have their backslashes escaped, except for the `shellScript` test
+function escapedPath(path, testID) {
+
+  if (testID !== 'shellScript') {
+    return path.replace(/\\/g,'\\\\');
+  }
+
+  return path;
+}
+
 function testHookContent(hookPath, testID, test, hookName) {
   var expected = grunt.file.read('test/expected/' + (hookName || 'pre-commit') + '.' + testID);
-  expected = expected.replace('{{expectedWorkingDir}}', gruntfileDirectory.replace('\\','\\\\')); // Paths should have backslashes escaped
+  expected = expected.replace('{{expectedWorkingDir}}', escapedPath(gruntfileDirectory, testID)); // Paths should have backslashes escaped
   var actual = grunt.file.read(hookPath);
-  test.equal(actual, expected, 'Should create hook with appropriate content');
+  
+  // Ignore line endings
+  test.equal(actual.replace(/[\n,\r]/g,''), expected.replace(/[\n,\r]/g,''), 'Should create hook with appropriate content');
 }
 
 function addTest(testSuite, testID) {
@@ -47,8 +60,10 @@ exports.githooks = {
   'generatedHookExecution': function (test) {
 
     test.expect(1);
-    exec(getHookPath('default'), function (err, stdout) {
+    exec(path.resolve(getHookPath('default')), function (err, stdout) {
 
+      console.log(err);
+      console.log(stdout);
       test.notEqual(stdout.indexOf('Boom! Running a task!'), -1);
       test.done();
     });
