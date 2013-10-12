@@ -219,6 +219,8 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['jshint', 'test']);
 
   // Dummy tasks used for testing
-  grunt.registerTask('aTask', function () {});
+  grunt.registerTask('aTask', function () {
+    console.log('Boom! Running a task!');
+  });
   grunt.registerTask('anotherTask', function () {});
 };

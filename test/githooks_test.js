@@ -49,6 +49,16 @@ function addTest(testSuite, testID) {
  */
 exports.githooks = {
 
+  'generatedHookExecution': function (test) {
+
+    test.expect(1);
+    exec(getHookPath('default'), function (err, stdout) {
+
+      test.notEqual(stdout.indexOf('Boom! Running a task!'), -1);
+      test.done();
+    });
+  },
+
   'logs.defaultLogging': function (test) {
 
     test.expect(1);
