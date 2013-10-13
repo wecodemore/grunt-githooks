@@ -4,7 +4,6 @@
 
 Work is in progress to support these two use cases:
 
- - on Windows, registering hooks able to run Grunt from a different folder than the root of the Git repo – [issue #7](https://github.com/rhumaric/grunt-githooks/issues/7)
  - when working with Git GUI, makins sure hooks have the appropriate path to Grunt – [issue #8](https://github.com/rhumaric/grunt-githooks/issues/8)
 
 ## Getting Started
@@ -196,7 +195,8 @@ you might want to disable this so any code after what was inserted by the plugin
 Type: `String`
 Default value: `'.git/hooks'`
 
-You probably won't use this one much, but in case you need to put the hooks somewhere else than in the `.git/hooks` folder, this is the option to use.
+This option allows you to choose in which directory the hooks should be generated. 
+Comes in handy if your Gruntfile is not at the root of your Git project.
 
 
 ## Contributing
