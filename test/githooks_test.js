@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require('fs'),
+    path = require('path'),
     exec = require('child_process').exec,
     grunt = require('grunt');
 
@@ -15,28 +16,106 @@ function getHookPath(testID, hookName) {
   return 'tmp/' + testID + '/' + (hookName || 'pre-commit');
 }
 
-function testHookPermissions(hookPath, test) {
-  test.ok(fs.statSync(hookPath).mode.toString(8).match(/755$/), 'Should generate hook file with appropriate permissions (755)');
+// Paths will have their backslashes escaped, except for the `shellScript` test
+function escapedPath(path, testID) {
+
+  if (testID !== 'shellScript') {
+    return path.replace(/\\/g,'\\\\');
+  }
+
+  return path;
 }
 
 function testHookContent(hookPath, testID, test, hookName) {
   var expected = grunt.file.read('test/expected/' + (hookName || 'pre-commit') + '.' + testID);
-  expected = expected.replace('{{expectedWorkingDir}}', gruntfileDirectory);
+  expected = expected.replace('{{expectedWorkingDir}}', escapedPath(gruntfileDirectory, testID)); // Paths should have backslashes escaped
   var actual = grunt.file.read(hookPath);
-  test.equal(actual, expected, 'Should create hook with appropriate content');
+  
+  // Ignore line endings
+  test.equal(actual.replace(/[\n,\r]/g,''), expected.replace(/[\n,\r]/g,''), 'Should create hook with appropriate content');
 }
 
 function addTest(testSuite, testID) {
 
   testSuite[testID] = function (test) {
 
-    test.expect(2);
+    test.expect(1);
     var hookPath = getHookPath(testID);
 
-    testHookPermissions(hookPath, test);
     testHookContent(hookPath, testID, test);
 
     test.done();
+  };
+}
+
+exports.githooks = {
+  'test.multipleHooks--commit-msg': function (test) {
+
+    test.expect(1);
+
+    var hookPath = getHookPath('multipleHooks','commit-msg');
+    testHookContent(hookPath,'multipleHooks', test, 'commit-msg');
+
+    test.done();
+  }
+};
+
+if (process.platform !== 'win32') {
+  // Due to task logs not appearing in stdout on Windows
+  // and trouble executing the generated hook with `exec`
+  // These tests are ignored on Windows and should be checked manually :(
+  exports.githooks['generatedHookExecution'] =  function (test) {
+
+    test.expect(1);
+    exec(path.resolve(getHookPath('default')), function (err, stdout) {
+
+      test.notEqual(stdout.indexOf('Boom! Running a task!'), -1);
+      test.done();
+    });
+  };
+
+  exports.githooks['logs.defaultLogging'] =  function (test) {
+
+    test.expect(1);
+    exec('grunt githooks:logs.defaultLogging', function(err, stdout) {
+
+      test.notEqual(stdout.indexOf('Binding `aTask` to `pre-commit` Git hook'), -1);
+      test.done();
+    });  
+  };
+
+  exports.githooks['logs.warnIfNotValidHook'] =  function (test) {
+      
+    test.expect(1);
+    exec('grunt githooks:logs.warnIfNotValidHook', function(err, stdout){
+
+      test.notEqual(stdout.indexOf('`definitelyNotTheNameOfAGitHook` is not the name of a Git hook.'), -1);
+      test.done();
+    });  
+  };
+
+  exports.githooks['fails.invalidScriptingLanguage'] =  function (test) {
+
+    test.expect(3);
+    exec('grunt githooks:fails.invalidScriptingLanguage', function(err, stdout, stderr){
+
+      test.ok(!!err);
+      test.notEqual(stdout.indexOf("doesn't seem to be written in the same language"), -1);
+      testHookContent(getHookPath('invalidScriptingLanguage'), 'invalidScriptingLanguage', test);
+      test.done();
+    });
+  };
+
+  exports.githooks['fails.customHashbangInvalidScriptingLanguage'] =  function (test) {
+
+    test.expect(3);
+    exec('grunt githooks:fails.customHashbangInvalidScriptingLanguage', function(err, stdout, stderr){
+
+      test.ok(!!err);
+      test.notEqual(stdout.indexOf("doesn't seem to be written in the same language"), -1);
+      testHookContent(getHookPath('customHashbangInvalidScriptingLanguage'), 'customHashbangInvalidScriptingLanguage', test);
+      test.done();
+    });
   };
 }
 
@@ -47,63 +126,6 @@ function addTest(testSuite, testID) {
  *  - name expected hook `pre-commit.<testID>`
  *  - set `dest` option of your task to `tmp/<testId>`
  */
-exports.githooks = {
-
-  'logs.defaultLogging': function (test) {
-
-    test.expect(1);
-    exec('grunt githooks:logs.defaultLogging', function(err, stdout) {
-
-      test.notEqual(stdout.indexOf('Binding `aTask` to `pre-commit` Git hook'), -1);
-      test.done();
-    });  
-  },
-
-  'logs.warnIfNotValidHook': function (test) {
-    
-    test.expect(1);
-    exec('grunt githooks:logs.warnIfNotValidHook', function(err, stdout){
-
-      test.notEqual(stdout.indexOf('`definitelyNotTheNameOfAGitHook` is not the name of a Git hook.'), -1);
-      test.done();
-    });  
-  },
-
-  'fails.invalidScriptingLanguage': function (test) {
-
-    test.expect(3);
-    exec('grunt githooks:fails.invalidScriptingLanguage', function(err, stdout, stderr){
-
-      test.ok(!!err);
-      test.notEqual(stdout.indexOf("doesn't seem to be written in the same language"), -1);
-      testHookContent(getHookPath('invalidScriptingLanguage'), 'invalidScriptingLanguage', test);
-      test.done();
-    });
-  },
-
-  'fails.customHashbangInvalidScriptingLanguage': function (test) {
-    test.expect(3);
-    exec('grunt githooks:fails.customHashbangInvalidScriptingLanguage', function(err, stdout, stderr){
-
-      test.ok(!!err);
-      test.notEqual(stdout.indexOf("doesn't seem to be written in the same language"), -1);
-      testHookContent(getHookPath('customHashbangInvalidScriptingLanguage'), 'customHashbangInvalidScriptingLanguage', test);
-      test.done();
-    });
-  },
-
-  'test.multipleHooks--commit-msg': function (test) {
-
-    test.expect(2);
-
-    var hookPath = getHookPath('multipleHooks','commit-msg');
-    testHookPermissions(hookPath, test);
-    testHookContent(hookPath,'multipleHooks', test, 'commit-msg');
-
-    test.done();
-  }
-};
-
 for (var target in grunt.config.data.githooks) {
   
   var TEST_TARGET = /^test.(.*)$/;
