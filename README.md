@@ -1,5 +1,7 @@
 # grunt-githooks
 
+[![Build Status](https://travis-ci.org/rhumaric/grunt-githooks.png?branch=master)](https://travis-ci.org/rhumaric/grunt-githooks)
+
 > A Grunt plugin to help bind Grunt tasks to Git hooks
 
 Work is in progress to support these two use cases:
