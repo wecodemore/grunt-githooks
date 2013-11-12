@@ -135,6 +135,16 @@ module.exports = function(grunt) {
         'pre-commit':'jshint'
       },
 
+      'test.command': {
+        options: {
+          dest: 'tmp/command'
+        },
+        'pre-commit': {
+          command: '/usr/bin/grunt',
+          taskNames: 'aTask'
+        }
+      },
+
       // Test targets for logging validation
       // Logs which tasks get bound to which hook
       'logs.defaultLogging': {

@@ -18,7 +18,8 @@ var defaults = {
   hashbang: '#!/usr/bin/env node',
   preventExit: false,
   startMarker: '// GRUNT-GITHOOKS START',
-  endMarker: '// GRUNT-GITHOOKS END'
+  endMarker: '// GRUNT-GITHOOKS END',
+  command: 'grunt'
 };
 
 var task = module.exports = function(grunt) {
