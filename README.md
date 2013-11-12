@@ -137,10 +137,12 @@ grunt.initConfig({
 
 In the template, you've got access to the following variables:
 
- - *task*: String with the name of the tasks to be run
- - *args*: String with the list of arguments to provide to the task
+ - *command*: `String` with the name of the command to run
+ - *task*: `String` with the name of the tasks to be run
+ - *args*: `String` with the list of arguments to provide to the task
  - *gruntfileDirectory*: Absolute path to the directory containing the Gruntfile
  - *preventExit*: Flag telling if the hook should avoid exiting after the grunt task
+ - *options*: The options provided to the grunt-githooks task to create this hook
 
 #### Extending the plugin
 
@@ -159,6 +161,24 @@ gruntGithooks.internals.Hook.prototype.getHookContent = function () {
 ```
 
 ### Options
+
+#### command
+Type: `String`
+Defaults: `grunt`
+
+The command that will be run by the hook. This has initally been introduced to
+allow specifying the full path to Grunt in some specific cases. It can also allow
+you to run another command than Grunt if you need.
+
+#### taskNames
+Type: `String`
+
+A space separated list of tasks that will be run by the hook.
+
+#### args
+Type: `String`
+
+Additional CLI arguments to be passed to the command run by the hook.
 
 #### hashbang
 Type: `String`
