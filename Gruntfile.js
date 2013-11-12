@@ -145,6 +145,15 @@ module.exports = function(grunt) {
         }
       },
 
+      'test.noTaskNames': {
+        options: {
+          dest: 'tmp/noTaskNames'
+        },
+        'pre-commit': {
+          preventExit: true
+        }
+      },
+
       // Test targets for logging validation
       // Logs which tasks get bound to which hook
       'logs.defaultLogging': {
@@ -164,15 +173,6 @@ module.exports = function(grunt) {
 
       // Fail if the existing hook does not have the appropriate scripting
       // language
-      'fails.noTaskNames': {
-        options: {
-          dest: 'tmp/noTaskNames'
-        },
-        'pre-commit': {
-          preventExit: true
-        }
-      },
-
       'fails.invalidScriptingLanguage': {
         options: {
           dest: 'tmp/invalidScriptingLanguage',
