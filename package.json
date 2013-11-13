@@ -1,7 +1,7 @@
 {
   "name": "grunt-githooks",
   "description": "A Grunt plugin to help bind Grunt tasks to Git hooks",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "homepage": "https://github.com/rhumaric/grunt-githooks",
   "author": {
     "name": "Romaric Pascal",
