@@ -232,3 +232,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
  - 2013-11-13   v0.3.0   New *command* option to specify which command to run, in case full path to Grunt is needed. NodeJS template now uses new `escapeBackslashes` helper to make sure backslashes ('\') are properly escaped when written in the hook
  - 2013-10-05   v0.2.0   New *args* option to specify arguments to hooked task. Bugfix to allow running grunt when the Gruntfile is not at the root of the project.
  - 2013-09-02   v0.1.0   Initial functionnalities
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/rhumaric/grunt-githooks/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
