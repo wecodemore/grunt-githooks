@@ -111,6 +111,14 @@ module.exports = function(grunt) {
         'pre-commit': 'aTask'
       },
 
+      'test.withQuotedArguments': {
+        options: {
+          dest: 'tmp/withQuotedArguments',
+          args: '--test "foo \'bar baz\'"'
+        },
+        'pre-commit': 'aTask'
+      },
+
       'test.hookSpecificOptions': {
 
         options: {
