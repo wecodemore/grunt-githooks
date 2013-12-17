@@ -191,7 +191,7 @@ Path to the Handlebars template used to generate the code that will run Grunt
 in the hook. Default template is the `node.js.hb` file located in the `templates` folder of the plugin. 
 It also contains a `shell.hb` file with the template for a shell script hook.
 
-> **Note**: Handlebars escapes HTML special characters if you use only two curly braces to insert,
+> **Note**: Handlebars escapes HTML special characters if you use only two curly braces to insert
 > a variable in your template. Make sure you use three `{{{my_var}}}` if you need to insert variable
 > that containt quotes, chevrons or anything that would be HTML escaped
 
