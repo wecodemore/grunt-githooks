@@ -5,10 +5,6 @@
 
 > A Grunt plugin to help bind Grunt tasks to Git hooks
 
-Work is in progress to support these two use cases:
-
- - when working with Git GUI, makins sure hooks have the appropriate path to Grunt – [issue #8](https://github.com/rhumaric/grunt-githooks/issues/8)
-
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
 
@@ -195,6 +191,10 @@ Path to the Handlebars template used to generate the code that will run Grunt
 in the hook. Default template is the `node.js.hb` file located in the `templates` folder of the plugin. 
 It also contains a `shell.hb` file with the template for a shell script hook.
 
+> **Note**: Handlebars escapes HTML special characters if you use only two curly braces to insert,
+> a variable in your template. Make sure you use three `{{{my_var}}}` if you need to insert variable
+> that containt quotes, chevrons or anything that would be HTML escaped
+
 #### startMarker
 Type: `String`
 Default: `'// GRUNT-GITHOOKS START'`
@@ -229,6 +229,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
  
+ - 2013-12-17   v0.3.1   [Escaping fix in the hooks templates](https://github.com/rhumaric/grunt-githooks/pull/15) by @gyoshev. 
  - 2013-11-13   v0.3.0   New *command* option to specify which command to run, in case full path to Grunt is needed. NodeJS template now uses new `escapeBackslashes` helper to make sure backslashes ('\') are properly escaped when written in the hook
  - 2013-10-05   v0.2.0   New *args* option to specify arguments to hooked task. Bugfix to allow running grunt when the Gruntfile is not at the root of the project.
  - 2013-09-02   v0.1.0   Initial functionnalities
