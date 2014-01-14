@@ -1,16 +1,14 @@
-var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 
-exec('{{escapeBackslashes command}}{{#if task}} {{escapeBackslashes task}}{{/if}}{{#if args}} {{{escapeBackslashes args}}}{{/if}}', {
-       cwd: '{{escapeBackslashes gruntfileDirectory}}'
-     }, function (err, stdout, stderr) {
-  
-  console.log(stdout);
+var grunt_process = spawn(
+  '{{escapeBackslashes command}}',
+  [ {{#if task}}'{{escapeBackslashes task}}'{{/if}}  ].concat({{#if args}}'{{{escapeBackslashes args}}}'.split(' '){{/if}}),
+  {
+    cwd: '{{escapeBackslashes gruntfileDirectory}}',
+    stdio: 'inherit'
+  }
+);
 
-  var exitCode = 0;
-  if (err) {
-    console.log(stderr);
-    exitCode = -1;
-  }{{#unless preventExit}}
-
-  process.exit(exitCode);{{/unless}}
+grunt_process.on('close', function(exitCode) {
+  {{#unless preventExit}}process.exit(exitCode);{{/unless}}
 });
