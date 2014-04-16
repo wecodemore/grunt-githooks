@@ -1,5 +1,5 @@
 #!/bin/sh
 
 ## GRUNT-GITHOOKS START
-(cd {{expectedWorkingDir}} && grunt jshint)
+(cd "{{expectedWorkingDir}}" && grunt jshint)
 ## GRUNT-GITHOOKS END
