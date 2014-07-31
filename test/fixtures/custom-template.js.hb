@@ -2,12 +2,12 @@
 var exec = require('child_process').exec;
 
 exec('grunt {{task}}', function (err, stdout, stderr) {
-  
+
   console.log(stdout);
 
   var exitCode = 0;
   if (err) {
-    console.log(stderr);
+    console.log(stderr || err);
     exitCode = -1;
   }
 
