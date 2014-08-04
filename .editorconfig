@@ -1,0 +1,24 @@
+# EditorConfig is awesome: http://EditorConfig.org
+; Let's stop arguing about white space policy
+
+
+; Top config file
+root = true
+
+; No BOM here
+charset = utf-8
+
+; Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+; No unnecessary white space
+trim_trailing_whitespace = true
+
+; 4 space indentation
+indent_style = tab
+
+[*.{json}]
+indent_style = tab
+indent_size = 4
