@@ -64,7 +64,7 @@ It will still create the hook, though, in case Git introduces new hooks in the f
 
 #### Hook specific options
 
-If you need to override a few options for a given hook only, you can *use and Object instead of a String*.
+If you need to override a few options for a given hook only, you can *use an Object instead of a String*.
 The `taskNames` property will then correspond to the tasks you want to run.
 Any other key will be merged into the options.
 
