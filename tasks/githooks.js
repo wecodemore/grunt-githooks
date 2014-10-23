@@ -29,15 +29,25 @@ var task = module.exports = function(grunt) {
 
   grunt.registerMultiTask('githooks', 'Binds grunt tasks to git hooks', function() {
     
-    var options = this.options(task.defaults);
+    var options = this.options(task.defaults),
+        hook;
 
-    grunt.file.mkdir(options.dest);
+    // Are we running tasks or hooking?
+    if ( this.args.length > 0 ) {
+      for (var i = 0; i < this.args.length; i += 1 ) {
+        hook = this.args[i];
+        console.log( hook + ": " + this.data[hook] );
+        grunt.task.run( this.data[hook].split(' ') );
+      }
+    } else {
+      grunt.file.mkdir(options.dest);
 
-    for (var key in this.data) {
+      for (var key in this.data) {
 
-      if (task.isGitHookDefinition(key)) {
+        if (task.isGitHookDefinition(key)) {
 
-        task.createHook(key, this.data[key], options, grunt);
+          task.createHook(key, this.name, options, grunt);
+        }
       }
     }
   });
@@ -47,7 +57,7 @@ var task = module.exports = function(grunt) {
 task.createHook = function (hookName, taskNames, options, grunt) {
 
   options = task.cloneOptions(options);
-  
+
   if(typeof taskNames === 'object') {
     task.mergeHookSpecificOptions(options, taskNames);
     taskNames = taskNames.taskNames;
