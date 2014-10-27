@@ -145,10 +145,10 @@ module.exports = function(grunt) {
 
       'test.command': {
         options: {
-          dest: 'tmp/command'
+          dest: 'tmp/command',
+          command: '/usr/bin/grunt'
         },
         'pre-commit': {
-          command: '/usr/bin/grunt',
           taskNames: 'aTask'
         }
       },

@@ -28,7 +28,7 @@ function escapedPath(path, testID) {
 
 function testHookContent(hookPath, testID, test, hookName) {
   var expected = grunt.file.read('test/expected/' + (hookName || 'pre-commit') + '.' + testID);
-  expected = expected.replace('{{expectedWorkingDir}}', escapedPath(gruntfileDirectory, testID)); // Paths should have backslashes escaped
+  expected = expected.replace(/\{\{expectedWorkingDir\}\}/g, escapedPath(gruntfileDirectory, testID)); // Paths should have backslashes escaped
   var actual = grunt.file.read(hookPath);
   
   // Ignore line endings
@@ -79,7 +79,7 @@ if (process.platform !== 'win32') {
     test.expect(1);
     exec('grunt githooks:logs.defaultLogging', function(err, stdout) {
 
-      test.notEqual(stdout.indexOf('Binding `aTask` to `pre-commit` Git hook'), -1);
+      test.notEqual(stdout.indexOf('Binding `githooks` to `pre-commit` Git hook'), -1);
       test.done();
     });  
   };
