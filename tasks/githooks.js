@@ -41,6 +41,7 @@ var task = module.exports = function(grunt) {
 };
 
 task.runTasks = function (options, grunt) {
+
   var hook, taskNames;
 
   for (var i = 0; i < this.args.length; i += 1 ) {
@@ -63,6 +64,7 @@ task.runTasks = function (options, grunt) {
 };
 
 task.createHooks = function (options, grunt) {
+
   grunt.file.mkdir(options.dest);
 
   for (var key in this.data) {
