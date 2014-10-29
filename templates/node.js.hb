@@ -8,7 +8,7 @@ fs.open('{{escapeBackslashes gruntfilePath}}', 'r', function(err, data) {
     process.exit(exitCode);
   }
 
-  exec('{{escapeBackslashes command}} {{escapeBackslashes task}}{{#if hook}}::{{{escapeBackslashes hook}}}{{/if}}{{#if args}} {{{escapeBackslashes args}}}{{/if}}', {
+  exec('{{escapeBackslashes command}} {{escapeBackslashes task}}{{#if hook}}::{{{escapeBackslashes hook}}}{{/if}}{{#if args}} {{{escapeBackslashes args}}}{{/if}} --gruntfile {{escapeBackslashes gruntfilePath}}', {
     cwd: '{{escapeBackslashes gruntfileDirectory}}'
   }, function (err, stdout, stderr) {
 

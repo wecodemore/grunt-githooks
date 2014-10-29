@@ -13,7 +13,7 @@ fs.open('{{expectedWorkingDir}}/Gruntfile.js', 'r', function(err, data) {
     process.exit(exitCode);
   }
 
-  exec('grunt githooks::pre-commit', {
+  exec('grunt githooks::pre-commit --gruntfile {{expectedWorkingDir}}/Gruntfile.js', {
     cwd: '{{expectedWorkingDir}}'
   }, function (err, stdout, stderr) {
 

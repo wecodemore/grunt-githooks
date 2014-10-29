@@ -3,6 +3,6 @@
 ## GRUNT-GITHOOKS START
 if [ -f "{{expectedWorkingDir}}/Gruntfile.js" ]
 then
-    (cd "{{expectedWorkingDir}}" && grunt githooks::pre-commit)
+    (cd "{{expectedWorkingDir}}" && grunt githooks::pre-commit --gruntfile {{expectedWorkingDir}}/Gruntfile.js)
 fi
 ## GRUNT-GITHOOKS END

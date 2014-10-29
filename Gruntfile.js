@@ -194,6 +194,14 @@ module.exports = function(grunt) {
           hashbang: '#!/usr/bin/node'
         },
         'pre-commit': 'jshint'
+      },
+
+      'test.missingGruntfile': {
+        options: {
+          dest: 'tmp/missingGruntfile',
+          gruntfile: 'Gruntfile.missing.js'
+        },
+        'pre-commit': 'jshint'
       }
     },
 

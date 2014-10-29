@@ -19,7 +19,8 @@ var defaults = {
   preventExit: false,
   startMarker: '// GRUNT-GITHOOKS START',
   endMarker: '// GRUNT-GITHOOKS END',
-  command: 'grunt'
+  command: 'grunt',
+  gruntfile: 'Gruntfile.js'
 };
 
 var task = module.exports = function(grunt) {
