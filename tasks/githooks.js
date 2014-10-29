@@ -46,11 +46,8 @@ task.runTasks = function (options, grunt) {
 
   for (var i = 0; i < this.args.length; i += 1 ) {
     hook = this.args[i];
-    console.log( hook + ": " + this.data[hook] );
 
     taskNames = this.data[hook];
-
-    console.log(taskNames);
 
     // Fix for old task specific options syntax
     if (typeof taskNames === 'object') {
@@ -108,6 +105,7 @@ task.cloneOptions = function (options) {
 };
 
 task.isGitHookDefinition = function(key) {
+
   // Consider any key that does not have a default as a GitHookDefinition
   return key !== 'options';
 };
@@ -120,6 +118,7 @@ task.validateHookName = function (hookName, grunt) {
 };
 
 task.logError = function (error, hookName, grunt) {
+
   var gruntError = error;
   if(error.message && error.message === 'ERR_INVALID_SCRIPT_LANGUAGE'){
     gruntError = 'A hook already exist for `' + hookName + '` but doesn\'t seem to be written in the same language as the binding script.';
