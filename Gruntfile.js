@@ -145,10 +145,10 @@ module.exports = function(grunt) {
 
       'test.command': {
         options: {
-          dest: 'tmp/command'
+          dest: 'tmp/command',
+          command: '/usr/bin/grunt'
         },
         'pre-commit': {
-          command: '/usr/bin/grunt',
           taskNames: 'aTask'
         }
       },
@@ -192,6 +192,14 @@ module.exports = function(grunt) {
         options: {
           dest: 'tmp/customHashbangInvalidScriptingLanguage',
           hashbang: '#!/usr/bin/node'
+        },
+        'pre-commit': 'jshint'
+      },
+
+      'test.missingGruntfile': {
+        options: {
+          dest: 'tmp/missingGruntfile',
+          gruntfile: 'Gruntfile.missing.js'
         },
         'pre-commit': 'jshint'
       }

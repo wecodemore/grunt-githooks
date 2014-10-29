@@ -19,7 +19,8 @@ var defaults = {
   preventExit: false,
   startMarker: '// GRUNT-GITHOOKS START',
   endMarker: '// GRUNT-GITHOOKS END',
-  command: 'grunt'
+  command: 'grunt',
+  gruntfile: 'Gruntfile.js'
 };
 
 var task = module.exports = function(grunt) {
@@ -28,36 +29,63 @@ var task = module.exports = function(grunt) {
   // creation: http://gruntjs.com/creating-tasks
 
   grunt.registerMultiTask('githooks', 'Binds grunt tasks to git hooks', function() {
-    
+
     var options = this.options(task.defaults);
 
-    grunt.file.mkdir(options.dest);
-
-    for (var key in this.data) {
-
-      if (task.isGitHookDefinition(key)) {
-
-        task.createHook(key, this.data[key], options, grunt);
-      }
+    // Are we running tasks or hooking?
+    if ( this.args.length > 0 ) {
+      task.runTasks.apply(this, [options, grunt]);
+    } else {
+      task.createHooks.apply(this, [options, grunt]);
     }
   });
+};
+
+task.runTasks = function (options, grunt) {
+
+  var hook, taskNames;
+
+  for (var i = 0; i < this.args.length; i += 1 ) {
+    hook = this.args[i];
+
+    taskNames = this.data[hook];
+
+    // Fix for old task specific options syntax
+    if (typeof taskNames === 'object') {
+      taskNames = taskNames.taskNames;
+    }
+
+    if (taskNames) {
+      grunt.task.run( taskNames.split(' ') );
+    }
+  }
+};
+
+task.createHooks = function (options, grunt) {
+
+  grunt.file.mkdir(options.dest);
+
+  for (var key in this.data) {
+
+    if (task.isGitHookDefinition(key)) {
+      if (typeof this.data[key] === 'object') {
+        grunt.log.error("Hook specific options are deprecated");
+      }
+
+      task.createHook(key, this.name, options, grunt);
+    }
+  }
 };
 
 // Expose the internals of the task so people can override them... at their own risk :D
 task.createHook = function (hookName, taskNames, options, grunt) {
 
   options = task.cloneOptions(options);
-  
-  if(typeof taskNames === 'object') {
-    task.mergeHookSpecificOptions(options, taskNames);
-    taskNames = taskNames.taskNames;
-  }
 
   grunt.log.subhead('Binding `' + taskNames + '` to `' + hookName + '` Git hook.');
   task.validateHookName(hookName, grunt);
 
   try {
-
     var hook = new task.internals.Hook(hookName, taskNames, options);
     hook.create();
     grunt.log.ok();
@@ -77,16 +105,8 @@ task.cloneOptions = function (options) {
   return result;
 };
 
-task.mergeHookSpecificOptions = function (options, hookOptions) {
-
-  for (var key in hookOptions) {
-    if (key !== 'taskNames') {
-      options[key] = hookOptions[key];
-    }
-  }
-};
-
 task.isGitHookDefinition = function(key) {
+
   // Consider any key that does not have a default as a GitHookDefinition
   return key !== 'options';
 };
@@ -99,6 +119,7 @@ task.validateHookName = function (hookName, grunt) {
 };
 
 task.logError = function (error, hookName, grunt) {
+
   var gruntError = error;
   if(error.message && error.message === 'ERR_INVALID_SCRIPT_LANGUAGE'){
     gruntError = 'A hook already exist for `' + hookName + '` but doesn\'t seem to be written in the same language as the binding script.';
