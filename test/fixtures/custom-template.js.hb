@@ -12,4 +12,6 @@ exec('grunt {{task}}', function (err, stdout, stderr) {
   }
 
   process.exit(exitCode);
+}).stdout.on('data', function (chunk){
+    process.stdout.write(chunk);
 });

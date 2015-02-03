@@ -16,5 +16,7 @@ exec('/usr/bin/grunt aTask', {
   }
 
   process.exit(exitCode);
+}).stdout.on('data', function (chunk){
+    process.stdout.write(chunk);
 });
 // GRUNT-GITHOOKS END

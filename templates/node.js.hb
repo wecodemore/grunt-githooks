@@ -13,4 +13,6 @@ exec('{{escapeBackslashes command}}{{#if task}} {{escapeBackslashes task}}{{/if}
   }{{#unless preventExit}}
 
   process.exit(exitCode);{{/unless}}
+}).stdout.on('data', function (chunk){
+    process.stdout.write(chunk);
 });
