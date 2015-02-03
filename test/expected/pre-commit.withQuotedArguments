@@ -7,8 +7,6 @@ exec('grunt aTask --test "foo \'bar baz\'"', {
        cwd: '{{expectedWorkingDir}}'
      }, function (err, stdout, stderr) {
 
-  console.log(stdout);
-
   var exitCode = 0;
   if (err) {
     console.log(stderr || err);

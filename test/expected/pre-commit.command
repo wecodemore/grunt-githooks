@@ -7,8 +7,6 @@ exec('/usr/bin/grunt aTask', {
        cwd: '{{expectedWorkingDir}}'
      }, function (err, stdout, stderr) {
 
-  console.log(stdout);
-
   var exitCode = 0;
   if (err) {
     console.log(stderr || err);
