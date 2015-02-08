@@ -3,8 +3,6 @@ var exec = require('child_process').exec;
 
 exec('grunt {{task}}', function (err, stdout, stderr) {
 
-  console.log(stdout);
-
   var exitCode = 0;
   if (err) {
     console.log(stderr || err);
@@ -12,4 +10,6 @@ exec('grunt {{task}}', function (err, stdout, stderr) {
   }
 
   process.exit(exitCode);
+}).stdout.on('data', function (chunk){
+    process.stdout.write(chunk);
 });

@@ -4,8 +4,6 @@ exec('{{escapeBackslashes command}}{{#if task}} {{escapeBackslashes task}}{{/if}
        cwd: '{{escapeBackslashes gruntfileDirectory}}'
      }, function (err, stdout, stderr) {
 
-  console.log(stdout);
-
   var exitCode = 0;
   if (err) {
     console.log(stderr || err);
@@ -13,4 +11,6 @@ exec('{{escapeBackslashes command}}{{#if task}} {{escapeBackslashes task}}{{/if}
   }{{#unless preventExit}}
 
   process.exit(exitCode);{{/unless}}
+}).stdout.on('data', function (chunk){
+    process.stdout.write(chunk);
 });

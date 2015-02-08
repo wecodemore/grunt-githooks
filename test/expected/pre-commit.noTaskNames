@@ -7,12 +7,12 @@ exec('grunt', {
        cwd: '{{expectedWorkingDir}}'
      }, function (err, stdout, stderr) {
 
-  console.log(stdout);
-
   var exitCode = 0;
   if (err) {
     console.log(stderr || err);
     exitCode = -1;
   }
+}).stdout.on('data', function (chunk){
+    process.stdout.write(chunk);
 });
 // GRUNT-GITHOOKS END

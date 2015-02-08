@@ -7,8 +7,6 @@ exec('grunt aTask --test myargument', {
        cwd: '{{expectedWorkingDir}}'
      }, function (err, stdout, stderr) {
 
-  console.log(stdout);
-
   var exitCode = 0;
   if (err) {
     console.log(stderr || err);
@@ -16,5 +14,7 @@ exec('grunt aTask --test myargument', {
   }
 
   process.exit(exitCode);
+}).stdout.on('data', function (chunk){
+    process.stdout.write(chunk);
 });
 // GRUNT-GITHOOKS END
