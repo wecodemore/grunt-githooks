@@ -1,4 +1,4 @@
-# grunt-githooks v0.3.2
+# grunt-githooks v0.4.0
 
 [![Build Status](https://travis-ci.org/wecodemore/grunt-githooks.png?branch=master)](https://travis-ci.org/wecodemore/grunt-githooks)
 [![Code Climate](https://codeclimate.com/github/wecodemore/grunt-githooks.png)](https://codeclimate.com/github/wecodemore/grunt-githooks)
@@ -230,6 +230,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 2015-02-08   v0.4.0   Pipe stdout for live updates
  - 2014-07-30   v0.3.2   Moved from @rhumaric to @wecodemore, updated default Nodejs template, updated badges
  - 2013-12-17   v0.3.1   [Escaping fix in the hooks templates](https://github.com/wecodemore/grunt-githooks/pull/15) by @gyoshev.
  - 2013-11-13   v0.3.0   New *command* option to specify which command to run, in case full path to Grunt is needed. NodeJS template now uses new `escapeBackslashes` helper to make sure backslashes ('\') are properly escaped when written in the hook
