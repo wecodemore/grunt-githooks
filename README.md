@@ -134,6 +134,7 @@ grunt.initConfig({
 
 In the template, you've got access to the following variables:
 
+ - *hook*: `String` with the name of the current hook
  - *command*: `String` with the name of the command to run
  - *task*: `String` with the name of the tasks to be run
  - *args*: `String` with the list of arguments to provide to the task
