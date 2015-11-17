@@ -2,22 +2,32 @@
   "name": "grunt-githooks",
   "description": "A Grunt plugin to help bind Grunt tasks to Git hooks",
   "version": "0.4.0",
-  "homepage": "https://github.com/rhumaric/grunt-githooks",
+  "homepage": "https://github.com/wecodemore/grunt-githooks",
   "author": {
     "name": "Romaric Pascal",
     "url": "http://rhumaric.com"
   },
+  "contributors": [
+    {
+      "name": "Franz Josef Kaiser",
+      "url": "http://unserkaiser.com"
+    },
+    {
+      "name": "Romaric Pascal",
+      "url": "http://rhumaric.com"
+    }
+  ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/rhumaric/grunt-githooks.git"
+    "url": "git://github.com/wecodemore/grunt-githooks.git"
   },
   "bugs": {
-    "url": "https://github.com/rhumaric/grunt-githooks/issues"
+    "url": "https://github.com/wecodemore/grunt-githooks/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/rhumaric/grunt-githooks/blob/master/LICENSE-MIT"
+      "url": "https://github.com/wecodemore/grunt-githooks/blob/master/LICENSE-MIT"
     }
   ],
   "main": "Gruntfile.js",
