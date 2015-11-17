@@ -245,9 +245,26 @@ Comes in handy if your Gruntfile is not at the root of your Git project.
 ## Contributing
 
 In lieu of a formal style-guide, take care to maintain the existing coding style.
-Add unit tests for any new or changed functionality. Lint and test your code
-using [Grunt](http://gruntjs.com/).
+Please file a Pull Request along your issues.
 
+ * Add unit tests for any new or changed functionality.
+ * Lint and test your code using [Grunt](http://gruntjs.com/).
+ * Keep the line length at 80-100 characters per line.
+
+### File a Pull Request
+
+The process actually is quite simple:
+
+ 1. Please check out your changes on a separate branch named `issue-{$integer}` and commit against that one.
+ 1. When your tests pass and are green, merge to `dev` using `--no-ff` so we have a separate commit for that merge.
+ 1. After the review on `dev`, we can merge to `master`, again using `--no-ff`.
+ 1. The merge to `master` will get tagged. We use the [SemVer standard](http://semver.org), so _no_ leading `v`.
+
+If your PR is successful, you will get added as contributor to the repo. We
+trust you after your first PR made it into the repo and you then have access
+for further changes, handling issues, etc. So the *important* thing is to add
+your name to the `package.json` array of `contributors` when changing or adding
+some code for a PR. Please do that in a separate commit.
 
 ## Release History
 
