@@ -1,4 +1,4 @@
-# grunt-githooks v0.4.0
+# grunt-githooks v0.5.0
 
 [![Build Status](https://travis-ci.org/wecodemore/grunt-githooks.png?branch=master)](https://travis-ci.org/wecodemore/grunt-githooks)
 [![Code Climate](https://codeclimate.com/github/wecodemore/grunt-githooks.png)](https://codeclimate.com/github/wecodemore/grunt-githooks)
@@ -268,6 +268,7 @@ some code for a PR. Please do that in a separate commit.
 
 ## Release History
 
+ - 2016-01-06   v0.5.0   Adds `{{ hook }}` template variable (props @markcarver), package again available on _NPM_, updates for contributing docs
  - 2015-02-08   v0.4.0   Pipe stdout for live updates
  - 2014-07-30   v0.3.2   Moved from @rhumaric to @wecodemore, updated default Nodejs template, updated badges
  - 2013-12-17   v0.3.1   [Escaping fix in the hooks templates](https://github.com/wecodemore/grunt-githooks/pull/15) by @gyoshev.
