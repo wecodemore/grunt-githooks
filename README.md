@@ -268,5 +268,5 @@ some code for a PR. Please do that in a separate commit.
 
 ## Release History
 
-See [Changelog](../../Changelog.md) for details or [the Release list](../../releases) 
+See [Changelog](../../CHANGELOG.md) for details or [the Release list](../../releases) 
 (see [latest](../../releases/latest) for recent updates).
