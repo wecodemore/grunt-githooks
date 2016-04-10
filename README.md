@@ -1,7 +1,7 @@
-# grunt-githooks v0.5.0
+# grunt-githooks v0.6.0
 
-[![Build Status](https://travis-ci.org/wecodemore/grunt-githooks.png?branch=master)](https://travis-ci.org/wecodemore/grunt-githooks)
-[![Code Climate](https://codeclimate.com/github/wecodemore/grunt-githooks.png)](https://codeclimate.com/github/wecodemore/grunt-githooks)
+[![Build Status](https://travis-ci.org/wecodemore/grunt-githooks.svg?branch=master)](https://travis-ci.org/wecodemore/grunt-githooks)
+[![Code Climate](https://codeclimate.com/github/wecodemore/grunt-githooks/badges/gpa.svg)](https://codeclimate.com/github/wecodemore/grunt-githooks)
 [![Downloads per Month](http://img.shields.io/npm/dm/grunt-githooks.svg)](https://www.npmjs.org/package/grunt-githooks)
 
 > A Grunt plugin to help bind Grunt tasks to Git hooks
