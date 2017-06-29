@@ -51,7 +51,7 @@ grunt.initConfig({
 #### Defining a few hooks
 
 Hooks are listed as keys of your target configuration. **Any key other than
-`option`** is considered the name of a hook you want to create. The simplest way
+`options`** is considered the name of a hook you want to create. The simplest way
 to define a hook is to provide a **space-separated list of the tasks you want
 the hook to run as the value**.
 
@@ -60,7 +60,8 @@ For example:
 grunt.initConfig({
   githooks: {
     all: {
-      // Will run the jshint and test:unit tasks at every commit
+      // Will create `./git/hooks/pre-commit` file which will be used at every commit,
+      // so that to run the `jshint` and `test:unit` tasks before commit really happen.
       'pre-commit': 'jshint test:unit',
     }
   }
@@ -179,7 +180,7 @@ gruntGithooks.internals.Hook.prototype.getHookContent = function () {
 Type: `String`
 Defaults: `grunt`
 
-The command that will be run by the hook. This has initally been introduced to
+The command that will be run by the hook. This has initially been introduced to
 allow specifying the full path to Grunt in some specific cases. It can also allow
 you to run another command than Grunt if you need.
 
@@ -211,7 +212,7 @@ shell script hook.
 
 > **Note**: Handlebars escapes HTML special characters if you use only two curly braces to insert
 > a variable in your template. Make sure you use three `{{{my_var}}}` if you need to insert variable
-> that containt quotes, chevrons or anything that would be HTML escaped
+> that contains quotes, chevrons or anything that would be HTML escaped
 
 #### startMarker
 Type: `String`
@@ -268,5 +269,4 @@ some code for a PR. Please do that in a separate commit.
 
 ## Release History
 
-See [Changelog](./CHANGELOG.md) for details or [the Release list](../../releases) 
-(see [latest](../../releases/latest) for recent updates).
+See [Changelog](./CHANGELOG.md) for details or [the Release list](../../releases) - (see [latest](../../releases/latest) for recent updates).
