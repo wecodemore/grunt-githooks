@@ -9,6 +9,7 @@
 'use strict';
 
 var githooks = require('../lib/githooks'),
+    fs = require('fs'),
     path = require('path');
 
 var defaults = {
@@ -30,6 +31,19 @@ var task = module.exports = function(grunt) {
   grunt.registerMultiTask('githooks', 'Binds grunt tasks to git hooks', function() {
     
     var options = this.options(task.defaults);
+
+    // Handle the work directory being a git submodule checkout where
+    // the .git entry is actually a file with contents of the form
+    //   "gitdir: ./path/to/enclosing/repo/.git/path/to/submodule"
+    var dirname = path.dirname(options.dest);
+    var basename = path.basename(options.dest);
+    if (fs.lstatSync(dirname).isFile())
+      options.dest =
+        path.join(path.resolve(fs.readFileSync(dirname)
+                                 .toString()
+                                 .trim()
+                                 .replace(/^gitdir: /, '')),
+                  basename);
 
     grunt.file.mkdir(options.dest);
 
