@@ -50,6 +50,6 @@
 		"hook"
 	],
 	"dependencies"     : {
-		"handlebars" : "~1.0.12"
+		"handlebars" : "~4.5.3"
 	}
 }
